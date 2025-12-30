@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yooti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <style>
+    * { box-sizing: border-box; }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #2d3436;
+    }
+    
+    .app-container {
+      background: rgba(255, 255, 255, 0.95);
+      width: 100%;
+      max-width: 420px;
+      padding: 40px;
+      box-sizing: border-box;
+      border-radius: 30px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .bg-circle {
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: #ff9f43;
+      border-radius: 50%;
+      opacity: 0.1;
+    }
+
+    h1 { 
+      margin: 0 0 5px 0; 
+      font-size: 42px; 
+      font-weight: 800;
+      background: -webkit-linear-gradient(45deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+    
+    .footer {
+      margin-top: auto;
+      font-size: 10px;
+      text-transform: uppercase; 
+      letter-spacing: 1.5px;
+      color: #b2bec3;
+      font-weight: 600;
+      padding-top: 20px;
+    }
+    
+    .input-group { margin-bottom: 25px; text-align: left; }
+    label { 
+      font-weight: 600; 
+      font-size: 13px; 
+      color: #636e72; 
+      margin-left: 5px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    
+    input[type="text"] { 
+      width: 100%; 
+      padding: 15px; 
+      border: 2px solid #dfe6e9; 
+      border-radius: 15px; 
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s;
+      outline: none;
+      background: #fdfdfd;
+    }
+    input[type="text"]:focus {
+      border-color: #764ba2;
+      background: #fff;
+    }
+    
+    .path-row { display: flex; gap: 10px; }
+    
+    .main-btn {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 10px;
+    }
+    
+    .btn-download {
+      background: linear-gradient(to right, #667eea, #764ba2);
+      box-shadow: 0 10px 20px -10px rgba(118, 75, 162, 0.5);
+    }
+    .btn-download:hover { transform: translateY(-3px); box-shadow: 0 15px 25px -10px rgba(118, 75, 162, 0.6); }
+    .btn-download:active { transform: scale(0.98); }
+    
+    .btn-cancel {
+      background: #dfe6e9;
+      color: #636e72;
+      display: none;
+      box-shadow: none;
+    }
+    .btn-cancel:hover { background: #b2bec3; }
+    
+    .btn-browse {
+      width: auto;
+      background: white;
+      color: #764ba2;
+      border: 2px solid #dfe6e9;
+      margin-top: 0;
+      font-weight: 600;
+      padding: 0 20px;
+    }
+    .btn-browse:hover { background: #f0f0f0; }
+
+    .progress-container {
+      width: 100%;
+      background-color: #f1f2f6;
+      border-radius: 50px;
+      height: 10px;
+      margin-top: 25px;
+      overflow: hidden;
+      display: none;
+    }
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: #00b894;
+      border-radius: 50px;
+      transition: width 0.2s;
+    }
+
+    #status { margin-top: 20px; font-size: 13px; min-height: 20px; font-weight: 600;}
+    #log { margin-top: 10px; font-size: 11px; color: #b2bec3; font-style: italic;}
+    .success { color: #00b894; }
+    .error { color: #d63031; }
+
+    #successView {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
+    }
+    .check-icon {
+      font-size: 60px;
+      color: #00b894;
+      margin-bottom: 20px;
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .action-row { display: flex; gap: 10px; width: 100%; margin-top: 20px; }
+    
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <div class="bg-circle"></div>
+
+    <div id="mainView">
+      <h1>Yooti</h1>
+
+      <div class="input-group">
+        <label>YouTube URL</label>
+        <input type="text" id="url" placeholder="Paste link here...">
+      </div>
+
+      <div class="input-group">
+        <label>Save Location</label>
+        <div class="path-row">
+          <input type="text" id="path" readonly placeholder="Choose a folder...">
+          <button id="browseBtn" class="main-btn btn-browse">Browse</button>
+        </div>
+      </div>
+
+      <button id="dlBtn" class="main-btn btn-download">Download Video</button>
+      <button id="cancelBtn" class="main-btn btn-cancel">Cancel</button>
+
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      
+      <div id="log"></div>
+      <div id="status"></div>
+    </div>
+
+    <div id="successView">
+      <div class="check-icon">✓</div>
+      <h2 style="margin: 0; color: #2d3436;">Done!</h2>
+      <p style="color: #636e72; margin: 10px 0 20px 0;">Your video is ready.</p>
+      
+      <div class="action-row">
+        <button id="againBtn" class="main-btn btn-download" style="margin-top:0">Download Another</button>
+        <button id="closeBtn" class="main-btn btn-cancel" style="display:block; background: #fab1a0; color: #fff;">Exit</button>
+      </div>
+    </div>
+
+    <div class="footer">Powered by Tekzilver</div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
